@@ -25,7 +25,7 @@ export default function Appointment() {
     e.preventDefault();
 
     try {
-      // Save WhatsApp message BEFORE clearing form
+      // Saves WhatsApp message BEFORE clearing form
       const formattedMessage = `
 New Appointment Request
 Name: ${form.name}
@@ -125,7 +125,7 @@ Message: ${form.message}
 
       {submitted && (
         <WhatsAppSender
-          phoneNumber="2348039368825" // your WhatsApp number
+          phoneNumber="2348039368825" // my WhatsApp number(receiver)
           message={whatsAppMessage}
         />
       )}
