@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
+import WhatsAppSender from "./WhatsAppSender";
 
 export default function Appointment() {
   const formRef = useRef();
@@ -13,37 +14,53 @@ export default function Appointment() {
     message: "",
   });
 
+  const [submitted, setSubmitted] = useState(false);
+  const [whatsAppMessage, setWhatsAppMessage] = useState("");
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    emailjs
-      .sendForm(
+    try {
+      // Save WhatsApp message BEFORE clearing form
+      const formattedMessage = `
+New Appointment Request
+Name: ${form.name}
+Email: ${form.email}
+Phone: ${form.phone}
+Date: ${form.date}
+Subject: ${form.subject}
+Message: ${form.message}
+      `;
+
+      setWhatsAppMessage(formattedMessage);
+
+      await emailjs.send(
         "service_joe8s1f", // my service ID
         "template_oijiwni", // my template ID
-        formRef.current,
+        form,
         "_o3fL1RzYKp6k5wTC", // my public key
-      )
-      .then(
-        () => {
-          alert("Appointment request sent successfully.");
-          setForm({
-            name: "",
-            email: "",
-            date: "",
-            subject: "",
-            phone: "",
-            message: "",
-          });
-        },
-        (error) => {
-          console.error("EmailJS Error:", error);
-          alert("Failed to send message. Please try again.");
-        },
       );
+
+      alert("Appointment request sent successfully.");
+      setSubmitted(true);
+
+      // Clear form
+      setForm({
+        name: "",
+        email: "",
+        date: "",
+        subject: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Email Error:", error);
+      alert("Failed to send message. Please try again.");
+    }
   };
 
   return (
@@ -79,7 +96,7 @@ export default function Appointment() {
 
         <input
           name="phone"
-          type="number"
+          type="tel"
           placeholder="Phone Number"
           value={form.phone}
           onChange={handleChange}
@@ -105,6 +122,13 @@ export default function Appointment() {
           Submit
         </button>
       </form>
+
+      {submitted && (
+        <WhatsAppSender
+          phoneNumber="2348039368825" // your WhatsApp number
+          message={whatsAppMessage}
+        />
+      )}
     </section>
   );
 }

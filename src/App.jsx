@@ -6,6 +6,8 @@ import Appointment from "./components/Appointment";
 import Footer from "./components/Footer";
 import Timer from "./components/Timer";
 import Looker from "./components/Looker";
+import WhatsAppSender from "./components/WhatsAppSender";
+
 
 function App() {
   return (
