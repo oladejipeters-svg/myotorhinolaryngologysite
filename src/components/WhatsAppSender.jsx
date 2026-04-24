@@ -8,7 +8,19 @@ const WhatsAppSender = ({ phoneNumber, message }) => {
   };
 
   return (
-    <button onClick={sendToWhatsApp} style={{ marginTop: "10px" }}>
+    <button
+      onClick={sendToWhatsApp}
+      style={{
+        marginTop: "10px",
+        backgroundColor: "#25D366",
+        color: "white",
+        padding: "10px 16px",
+        border: "none",
+        borderRadius: "6px",
+        cursor: "pointer",
+        fontWeight: "bold",
+      }}
+    >
       Send to WhatsApp
     </button>
   );
