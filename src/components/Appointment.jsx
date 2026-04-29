@@ -45,8 +45,9 @@ Message: ${form.message}
         "_o3fL1RzYKp6k5wTC", // my public key
       );
 
-      alert("Appointment request sent successfully.");
+      alert("Appointment request sent successfully. Click WhatsApp button below to also deliver to WhatsApp");
       setSubmitted(true);
+
 
       // Clear form
       setForm({
